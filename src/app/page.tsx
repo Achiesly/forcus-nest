@@ -7,7 +7,7 @@ import { headers } from 'next/headers';
 
 export default async function Home() {
   const headersList = await headers();
-  const tier = headersList.get('x-tier') || 'other';
+  const tier = headersList.get('x-tier') || 'free';
 
   return (
     <main className="flex flex-col min-h-screen bg-black/85 text-white">
