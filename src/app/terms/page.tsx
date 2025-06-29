@@ -14,8 +14,7 @@ const Terms = () => {
                 <section className="mb-6 sm:mb-8">
                     <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-3 sm:mb-4">Acceptance of Terms</h2>
                     <p className="mb-3 sm:mb-4">
-                        By accessing and using FocusNest (&quot;the Service&quot;)
-, you accept and agree to be bound by the terms and provision of this agreement. 
+                        By accessing and using FocusNest (&quot;the Service&quot;), you accept and agree to be bound by the terms and provision of this agreement. 
                     </p>
                 </section>
 
