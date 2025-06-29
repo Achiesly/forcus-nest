@@ -5,6 +5,8 @@ import {
   AlertCircle,
 } from "lucide-react";
 
+
+
 export default function FirstSection() {
   return (
     <div className="min-h-screen bg-gray-100 mt-12 text-gray-900">

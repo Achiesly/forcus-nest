@@ -5,9 +5,15 @@ import { Play, Pause, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useSettings } from '@/components/MainSection/SettingsContext';
 
+
+interface PomodoroTimerProps {
+  tier: string;
+}
+
+
 type TimerMode = 'pomodoro' | 'shortBreak' | 'longBreak';
 
-const PomodoroTimer = () => {
+const PomodoroTimer: React.FC<PomodoroTimerProps> = () => {
   const { settings } = useSettings();
 
   const [mode, setMode] = useState<TimerMode>('pomodoro');
@@ -33,7 +39,7 @@ const PomodoroTimer = () => {
 const defaultDurations = { pomodoro: 25, shortBreak: 5, longBreak: 15 };
 
 
-const modes = {
+const modes = React.useMemo(() => ({
   pomodoro: {
     duration: (settings.useDefaults ? defaultDurations.pomodoro : settings.durations.pomodoro) * 60,
     label: 'Pomodoro',
@@ -49,14 +55,17 @@ const modes = {
     label: 'Long Break',
     color: 'from-blue-400 to-blue-600'
   }
-};
+}), [settings, defaultDurations.pomodoro, defaultDurations.shortBreak, defaultDurations.longBreak]);
 
 
 
   // Function to play notification sound
   const playNotificationSound = () => {
     try {
-      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const audioContext = new (
+        window.AudioContext ||
+        (window as typeof window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext
+      )();
       
       // Create a bell-like sound using multiple frequencies
       const frequencies = [800, 1000, 1200]; // Bell-like frequencies
@@ -80,13 +89,13 @@ const modes = {
         oscillator.start(audioContext.currentTime + index * 0.1);
         oscillator.stop(audioContext.currentTime + duration + index * 0.1);
       });
-    } catch (error) {
+    } catch {
       console.log('Audio not supported or failed to play');
       // Fallback: try to use a simple beep
       try {
         const audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhGAhGn+Pwtm0hGAhFouPwqm0hGAhFouPwqm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+Pw==');
         audio.play();
-      } catch (fallbackError) {
+      } catch {
         console.log('No audio support available');
       }
     }

@@ -44,16 +44,16 @@ const Terms = () => {
                     <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-3 sm:mb-4">Changes to Terms</h2>
                     <p className="mb-3 sm:mb-4">
                         We reserve the right to modify these Terms at any time. We will notify users of any changes by posting the 
-                        new Terms on this page and updating the "Last updated" date. Your continued use of the Service after any 
+                        new Terms on this page and updating the &quot;Last updated&quot; date. Your continued use of the Service after any 
                         modifications constitutes acceptance of the new Terms.
                     </p>
                 </section>
                 <section className="mb-6 sm:mb-8">
                     <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-3 sm:mb-4">Contact Information</h2>
                     <p className="mb-3 sm:mb-4">
-                        If you have any questions or concerns regarding these Terms and Conditions, please don’t hesitate to reach out. You can contact us directly by emailing
+                        If you have any questions or concerns regarding these Terms and Conditions, please don&apos;t hesitate to reach out. You can contact us directly by emailing
                         <br />
-                        <a href="mailto:support@focusnest.online" className="text-blue-600 underline break-all">support@focusnest.online</a>. We’re here to help and will do our best to respond promptly.
+                        <a href="mailto:support@focusnest.online" className="text-blue-600 underline break-all">support@focusnest.online</a>. We&apos;re here to help and will do our best to respond promptly.
                     </p>
                 </section>
             </div>

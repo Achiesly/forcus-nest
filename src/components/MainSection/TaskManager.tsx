@@ -6,6 +6,10 @@ import { Input } from '@/components/ui/input';
 import TaskItem from './TaskItem';
 
 
+
+
+
+
 interface Task {
   id: string;
   text: string;
@@ -14,7 +18,11 @@ interface Task {
   estimatedPomodoros: number;
 }
 
-const TaskManager = () => {
+interface TaskManagerProps {
+  tier: string;
+}
+
+const TaskManager: React.FC<TaskManagerProps> = ({ }) => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTask, setNewTask] = useState('');
   const [isAdding, setIsAdding] = useState(false);
@@ -47,18 +55,18 @@ const TaskManager = () => {
   const completedTasks = tasks.filter(task => task.completed).length;
   const totalPomodoros = tasks.reduce((sum, task) => sum + task.pomodoros, 0);
 
-// Load from localStorage
-useEffect(() => {
-  const storedTasks = localStorage.getItem('tasks');
-  if (storedTasks) {
-    setTasks(JSON.parse(storedTasks));
-  }
-}, []);
+  // Load from localStorage
+  useEffect(() => {
+    const storedTasks = localStorage.getItem('tasks');
+    if (storedTasks) {
+      setTasks(JSON.parse(storedTasks));
+    }
+  }, []);
 
-// Save to localStorage when tasks change
-useEffect(() => {
-  localStorage.setItem('tasks', JSON.stringify(tasks));
-}, [tasks]);
+  // Save to localStorage when tasks change
+  useEffect(() => {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }, [tasks]);
 
   return (
 <div className="bg-blue-700 rounded-2xl p-4 sm:p-6 text-white container mx-auto max-w-[95%] sm:max-w-3xl shadow-lg">

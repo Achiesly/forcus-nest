@@ -51,7 +51,7 @@ export default function ContentSection() {
           <h2 className="text-3xl font-semibold text-red-300">Pro Tips with FocusNest</h2>
           <ul className="list-disc list-inside space-y-2 text-gray-300">
             <li>Turn off notifications and stay distraction-free.</li>
-            <li>Use the "2-minute rule" to handle quick tasks immediately.</li>
+           <li>Use the &quot;2-minute rule&quot; to handle quick tasks immediately.</li>
             <li>Track completed Pomodoros to optimize your work habits.</li>
             <li>Use breaks wisely — Don&apos;t skip them!</li>
             <li>Customize timer lengths in FocusNest for your unique needs.</li>

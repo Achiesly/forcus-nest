@@ -9,8 +9,8 @@ export default function ContactPage() {
       <div className="w-full max-w-md sm:max-w-xl bg-white p-4 sm:p-8 ">
         <h1 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4 text-gray-900">Contact</h1>
         <p className="text-gray-600 mb-4 sm:mb-6 leading-relaxed text-xs sm:text-base">
-          We're here to help! Whether you have a question, suggestion, or just want to say hi,
-          don’t hesitate to reach out. We aim to respond as soon as possible.
+          We&apos;re here to help! Whether you have a question, suggestion, or just want to say hi,
+          don&apos;t hesitate to reach out. We aim to respond as soon as possible.
         </p>
 
         <div className="space-y-4">

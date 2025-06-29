@@ -93,7 +93,11 @@ export default function Header() {
         <label>Theme</label>
         <select
           value={settings.theme}
-          onChange={(e) => updateSettings({ theme: e.target.value as any })}
+          onChange={(e) =>
+            updateSettings({
+              theme: e.target.value as 'system' | 'light' | 'dark',
+            })
+          }
           className="border px-2 py-1 rounded"
         >
           <option value="system">System</option>
