@@ -30,7 +30,7 @@ export default function ContentSection() {
         <div className="space-y-6">
           <h2 className="text-3xl font-semibold text-red-300">Why Use the Pomodoro Technique with FocusNest?</h2>
           <ul className="list-disc list-inside space-y-2 text-gray-300">
-            <li><strong className="text-white">Better Time Management:</strong> Track time more effectively using FocusNest’s timer.</li>
+            <li><strong className="text-white">Better Time Management:</strong> Track time more effectively using FocusNest&apos;s timer.</li>
             <li><strong className="text-white">Enhanced Focus:</strong> Eliminate distractions and improve concentration.</li>
             <li><strong className="text-white">Reduced Mental Fatigue:</strong> Refresh your mind with well-timed breaks.</li>
             <li><strong className="text-white">Increased Productivity:</strong> Get more done with less burnout.</li>
@@ -43,7 +43,7 @@ export default function ContentSection() {
             <li><strong className="text-white">Plan Your Tasks:</strong> Use FocusNest to break large projects into small goals.</li>
             <li><strong className="text-white">Start the Timer:</strong> Stay focused for 25 minutes with zero distractions.</li>
             <li><strong className="text-white">Take Short Breaks:</strong> Rest for 5 minutes to recharge your brain.</li>
-            <li><strong className="text-white">Enjoy a Long Break:</strong> After 4 sessions, take 15–30 minutes to relax fully.</li>
+            <li><strong className="text-white">Enjoy a Long Break:</strong> After 4 sessions, take 15-30 minutes to relax fully.</li>
           </ol>
         </div>
 
@@ -53,7 +53,7 @@ export default function ContentSection() {
             <li>Turn off notifications and stay distraction-free.</li>
             <li>Use the "2-minute rule" to handle quick tasks immediately.</li>
             <li>Track completed Pomodoros to optimize your work habits.</li>
-            <li>Use breaks wisely — don’t skip them!</li>
+            <li>Use breaks wisely — Don&apos;t skip them!</li>
             <li>Customize timer lengths in FocusNest for your unique needs.</li>
           </ul>
         </div>
@@ -61,8 +61,8 @@ export default function ContentSection() {
         <div className="space-y-6">
           <h2 className="text-3xl font-semibold text-red-300">Avoid These Common Mistakes</h2>
           <ul className="list-disc list-inside space-y-2 text-gray-300">
-            <li><strong className="text-white">Don’t multitask:</strong> One task per session is key.</li>
-            <li><strong className="text-white">Take your breaks seriously:</strong> They’re essential for focus recovery.</li>
+            <li><strong className="text-white">Don&apos;t multitask:</strong> One task per session is key.</li>
+            <li><strong className="text-white">Take your breaks seriously:</strong> They are essential for focus recovery.</li>
             <li><strong className="text-white">Plan your tasks well:</strong> Vague goals slow you down.</li>
           </ul>
         </div>
@@ -86,7 +86,7 @@ export default function ContentSection() {
 
             <p><strong className="text-white">What should I do during breaks?</strong><br />Move, breathe, hydrate — anything that relaxes your mind without screens.</p>
 
-            <p><strong className="text-white">How many Pomodoros per day?</strong><br />Start with 4–6. With practice, most users reach 8–12 effective sessions daily.</p>
+            <p><strong className="text-white">How many Pomodoros per day?</strong><br />Start with 4-6. With practice, most users reach 8-12 effective sessions daily.</p>
           </div>
         </div>
       </div>

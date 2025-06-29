@@ -19,11 +19,12 @@ export default function FirstSection() {
               <div className="max-w-2xl md:max-w-4xl mx-auto">
                 <p className="mb-4 sm:mb-6 text-gray-700 leading-relaxed text-sm sm:text-base tracking-wide">
                   The Pomodoro Technique is a revolutionary time management method developed by Francesco Cirillo in the late 1980s.
-                  Named after the tomato-shaped kitchen timer (pomodoro means "tomato" in Italian), this technique breaks work into
+                  Named after the tomato-shaped kitchen timer <span>(pomodoro means &quot;tomato&quot; in Italian)</span>
+, this technique breaks work into
                   focused 25-minute intervals followed by short breaks.
                 </p>
                 <p className="text-sm sm:text-base text-gray-700 leading-relaxed tracking-wide">
-                  At <strong className="text-black/80">FocusNest</strong>, we’ve modernized this proven method into a simple, easy-to-use digital tool that helps you stay disciplined, track your sessions, and improve your productivity seamlessly.
+                  At <strong className="text-black/80">FocusNest</strong>, we&apos;ve modernized this proven method into a simple, easy-to-use digital tool that helps you stay disciplined, track your sessions, and improve your productivity seamlessly.
                   This scientifically-backed method helps combat procrastination, improves focus, and significantly boosts productivity by working with your brain’s natural attention span rather than against it. Studies show that the human brain can maintain peak focus for approximately 25 minutes before requiring a mental break.
                 </p>
               </div>
@@ -45,7 +46,7 @@ export default function FirstSection() {
               <div className="bg-white/80 rounded-xl p-4 sm:p-6 shadow flex flex-col">
                 <h3 className="text-lg sm:text-xl font-semibold mb-2 text-center">Flow State Optimization</h3>
                 <p className="leading-relaxed text-gray-700 text-sm sm:text-base">
-                  The 25-minute work sessions built into FocusNest are designed to help you quickly enter a flow state, a psychological condition where you’re fully immersed and productive.
+                  The 25-minute work sessions built into FocusNest are designed to help you quickly enter a flow state, a psychological condition where you are fully immersed and productive.
                 </p>
               </div>
             </div>

@@ -17,7 +17,7 @@ export default function Science(){
               <div className="bg-white/70 rounded-xl p-4 sm:p-6 shadow flex flex-col">
                 <h3 className="text-lg sm:text-xl font-semibold mb-2 text-center">Flow State Optimization</h3>
                 <p className="leading-relaxed text-gray-700 text-sm sm:text-base">
-                  The 25-minute work sessions built into FocusNest are designed to help you quickly enter a flow state, a psychological condition where you’re fully immersed and productive.
+                  The 25-minute work sessions built into FocusNest are designed to help you quickly enter a flow state, a psychological condition where you are fully immersed and productive.
                 </p>
               </div>
             </div>
