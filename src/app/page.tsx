@@ -22,10 +22,18 @@ export const metadata = {
         url: 'https://www.focusnest.online/og-image.png', // optional, replace with your OG image
         width: 1200,
         height: 630,
-        alt: 'FocusNest – Pomodoro Timer',
+        alt: 'FocusNest-Pomodoro Timer',
       },
     ],
   },
+    twitter: {
+    card: 'summary_large_image',
+    title: 'FocusNest-Free Pomodoro Timer',
+    description: 'Boost your focus and productivity using the Pomodoro technique. No login required!',
+    creator: '@yourhandle', // Optional: Add your Twitter handle
+    images: ['https://www.focusnest.online/og-image.png'],
+  },
+
   icons: {
     icon: '/favicon.ico',
   },

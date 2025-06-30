@@ -1,0 +1,22 @@
+{
+  "name": "FocusNest-Free Pomodoro Timer for Deep Work & Study",
+  "short_name": "FocusNest",
+  "description": "A free online Pomodoro timer for deep work and productivity.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#1e3a8a", 
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
