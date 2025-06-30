@@ -22,7 +22,6 @@ export default function RootLayout({
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
         <meta name="theme-color" content="#1e3a8a" />
-        <link rel="manifest" href="/site.webmanifest" />
       </head>
       
       <body className={inter.className}>
