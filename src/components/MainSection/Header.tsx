@@ -5,10 +5,8 @@ import { useSettings } from '@/components/MainSection/SettingsContext';
 
 export default function Header() {
   const [open, setOpen] = useState(false);
-
-
-
-
+  
+// Listen for custom event to open settings modal
 useEffect(() => {
   const handleOpen = () => setOpen(true);
   document.addEventListener('open-settings', handleOpen);
