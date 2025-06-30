@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://www.focusnest.online
+
+# Sitemaps
+Sitemap: https://www.focusnest.online/sitemap.xml

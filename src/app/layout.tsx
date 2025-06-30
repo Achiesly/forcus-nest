@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+//import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
@@ -8,11 +8,6 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const inter = Inter({ subsets: ['latin'] });
 
-export const metadata: Metadata = {
-  title: "ForcusNest-Stay Focused. Work Smarter. Beat Distractions.",
-  description: "FocusNest helps you stay productive using the science-backed Pomodoro technique. Boost your focus, avoid burnout, and get more done, one session at a time.",
-};
-
 export default function RootLayout({
   children,
 }: {
@@ -20,6 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      
       <body className={inter.className}>
           {/* Navbar component */}
           
