@@ -4,6 +4,7 @@ import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 import Footer from '@/components/footer';
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { SettingsProvider } from '@/components/MainSection/SettingsContext';
 
 
 const inter = Inter({ subsets: ['latin'] });
@@ -28,15 +29,16 @@ export default function RootLayout({
           {/* Navbar component */}
           
           {/* Main content goes here */}
-        
+        <SettingsProvider>
+          {/* Main section with children components */}
           {children}
-        
           {/* Analytics and Speed Insights components */}
           <Analytics />
           <SpeedInsights />
           {/* Footer component */}
           {/* Footer is placed here to ensure it appears at the bottom of the page */}
           <Footer />
+        </SettingsProvider>
       </body>
     </html>
   );

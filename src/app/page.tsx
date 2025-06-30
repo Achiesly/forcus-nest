@@ -6,6 +6,7 @@ import TaskManager from '@/components/MainSection/TaskManager';
 import FirstSection from '@/components/MainSection/FirstSection';
 import FAQSection from '@/components/MainSection/faq';
 import Navbar from '@/components/navbar';
+import Header from '@/components/MainSection/Header';
 
 export const metadata = {
   title: 'FocusNest-Free Pomodoro Timer for Deep Work & Study',
@@ -62,6 +63,7 @@ export default function Home() {
       />
 
       <Navbar />
+      <Header />
       <PomodoroTimer />
       <TaskManager />
       <FirstSection />

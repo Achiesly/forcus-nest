@@ -1,11 +1,13 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { Settings } from 'lucide-react';
+import React, { useState, useEffect } from 'react'
 import { useSettings } from '@/components/MainSection/SettingsContext';
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+
+
+
 
 useEffect(() => {
   const handleOpen = () => setOpen(true);
@@ -18,14 +20,7 @@ useEffect(() => {
   return (
     <>
 {/* Header */}
-<header className="flex items-center justify-end mt-4 px-4 sm:px-8 md:px-12 py-2">
-  <button
-    onClick={() => setOpen(true)}
-    className="bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-colors duration-200 rounded-full p-3 cursor-pointer"
-  >
-    <Settings className="w-6 h-6 text-black/95" />
-  </button>
-</header>
+<header className="hidden" />
 
 {/* Settings Modal */}
 {open && (
