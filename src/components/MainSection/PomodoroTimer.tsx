@@ -1,19 +1,19 @@
 
 "use client";
 import React, { useState, useEffect, useRef } from 'react';
-import { Play, Pause, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useSettings } from '@/components/MainSection/SettingsContext';
+import { FaArrowRotateRight } from "react-icons/fa6";
+import { IoMdSettings } from "react-icons/io";
+//import Settings from '../MainSection/Header';
 
 
-interface PomodoroTimerProps {
-  tier: string;
-}
+
 
 
 type TimerMode = 'pomodoro' | 'shortBreak' | 'longBreak';
 
-const PomodoroTimer: React.FC<PomodoroTimerProps> = () => {
+const PomodoroTimer: React.FC = () => {
   const { settings } = useSettings();
 
   const [mode, setMode] = useState<TimerMode>('pomodoro');
@@ -169,17 +169,15 @@ const modes = React.useMemo(() => ({
   const progress = ((modes[mode].duration - timeLeft) / modes[mode].duration) * 100;
 
   return (
-<div className="flex flex-col items-center space-y-8 mb-11 mt-4 px-4 sm:px-6">
-  {/* Mode Selector */}
-  <div className="bg-white/20 backdrop-blur-sm rounded-full p-0 flex flex-wrap justify-center gap-2 sm:space-x-2">
-    {Object.entries(modes).map(([key, config]) => (
+<div className="flex flex-col items-center space-y-8 mb-11 mt- px-4 sm:px-6">
+  <div className="bg-transparent backdrop-blur-sm rounded-full p-0 flex flex-wrap justify-center gap-2 sm:space-x-2">  {Object.entries(modes).map(([key, config]) => (
       <button
         key={key}
         onClick={() => handleModeChange(key as TimerMode)}
-        className={`px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base rounded-full font-medium transition-all duration-200 cursor-pointer ${
+        className={`px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base rounded-full font-medium transition-all duration-200 cursor-pointer border border-white/50 ${
           mode === key
-            ? 'bg-white text-red-500 shadow-lg'
-            : 'text-white hover:bg-white/20'
+            ? 'bg-white text-black/95 shadow-lg'
+            : 'text-white hover:bg-white hover:text-black'
         }`}
       >
         {config.label}
@@ -226,33 +224,24 @@ const modes = React.useMemo(() => ({
   </div>
 
   {/* Controls */}
-  <div className="flex flex-wrap items-center justify-center gap-4">
-    <Button
-      onClick={toggleTimer}
-      size="lg"
-      className="bg-white text-red-500 hover:bg-white/90 px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold transition-all duration-200 transform cursor-pointer"
-    >
-      {isRunning ? (
-        <>
-          <Pause className="w-5 sm:w-6 h-5 sm:h-6 mr-2" />
-          PAUSE
-        </>
-      ) : (
-        <>
-          <Play className="w-5 sm:w-6 h-5 sm:h-6 mr-2" />
-          START
-        </>
-      )}
-    </Button>
+  <div className="flex flex-wrap items-center justify-center gap-3">
+  <Button
+    onClick={toggleTimer}
+    size="lg"
+    className="bg-white round-full text-black/95 hover:bg-white/95 px-10 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-bold transition-all duration-200 transform cursor-pointer 2xl"
+  >
+    {isRunning ? 'PAUSE' : 'START'}
+  </Button>
+ 
+    <FaArrowRotateRight className="w-6 h-6 text-white cursor-pointer hover:text-white/95 transition-all duration-200" 
+     onClick={resetTimer}/>
 
-    <Button
-      onClick={resetTimer}
-      variant="outline"
-      size="lg"
-      className="border-white/30 text-black rounded-full px-6 py-3 sm:px-6 sm:py-4 cursor-pointer"
-    >
-      <RotateCcw className="w-5 h-5 sm:w-6 sm:h-6" />
-    </Button>
+    <IoMdSettings
+      className="w-8 h-8 text-white cursor-pointer hover:text-white/95 transition-all duration-200"
+      onClick={() => document.dispatchEvent(new CustomEvent('open-settings'))}
+    />
+
+
   </div>
 </div>
 

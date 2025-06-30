@@ -44,18 +44,18 @@ const TaskItem = ({ task, onUpdate, onDelete }: TaskItemProps) => {
 
   return (
     <div className={`bg-white/10 rounded-lg p-4 transition-all duration-200 ${
-      task.completed ? 'opacity-60' : ''
+      task.completed ? 'opacity-70' : ''
     }`}>
       <div className="flex items-start gap-3">
         <button
           onClick={handleToggleComplete}
           className={`flex-shrink-0 w-6 h-6 rounded-full border-2 transition-all duration-200 flex items-center justify-center ${
             task.completed
-              ? 'bg-green-500 border-green-500'
+              ? 'bg-blue-500 border-blue-500'
               : 'border-white/40 hover:border-white/60'
           }`}
         >
-          {task.completed && <Check className="w-4 h-4 text-white" />}
+          {task.completed && <Check className="w-6 h-6 text-white" />}
         </button>
 
         <div className="flex-1">
@@ -64,7 +64,7 @@ const TaskItem = ({ task, onUpdate, onDelete }: TaskItemProps) => {
               <Input
                 value={editText}
                 onChange={(e) => setEditText(e.target.value)}
-                className="bg-white/20 border-white/30 text-white"
+                className="bg-white/20 border-white/30 text-white placeholder:text-white w-full focus:ring-1 focus:ring-white/10"
                 onKeyPress={(e) => {
                   if (e.key === 'Enter') handleSaveEdit();
                   if (e.key === 'Escape') handleCancelEdit();
@@ -75,7 +75,7 @@ const TaskItem = ({ task, onUpdate, onDelete }: TaskItemProps) => {
                 <Button
                   onClick={handleSaveEdit}
                   size="sm"
-                  className="bg-white hover:bg-white/97 cursor-pointer text-black/95"
+                  className="bg-white hover:bg-white/97 cursor-pointer text-black"
                 >
                   Save
                 </Button>
@@ -83,7 +83,7 @@ const TaskItem = ({ task, onUpdate, onDelete }: TaskItemProps) => {
                   onClick={handleCancelEdit}
                   size="sm"
                   variant="outline"
-                  className="border-white/30 text-red-500 hover:bg-white/97 hover:text-red-500 cursor-pointer"
+                  className="border-white/30 text-white hover:bg-white/97 hover:text-black cursor-pointer"
                 >
                   Cancel
                 </Button>
@@ -96,7 +96,7 @@ const TaskItem = ({ task, onUpdate, onDelete }: TaskItemProps) => {
               </div>
               
               <div className="flex items-center justify-between mt-2">
-                <div className="flex items-center gap-4 text-sm text-white/80">
+                <div className="flex items-center gap-4 text-sm text-white">
                   <div className="flex items-center gap-1">
                     <Clock className="w-4 h-4" />
                     <span>{task.pomodoros}/{task.estimatedPomodoros}</span>
@@ -108,7 +108,7 @@ const TaskItem = ({ task, onUpdate, onDelete }: TaskItemProps) => {
                     onClick={incrementPomodoro}
                     size="sm"
                     variant="outline"
-                    className="border-white/30 text-black/95 cursor-pointer hover:bg-white/20 px-2 py-1 h-8"
+                    className="border-white/30 text-white cursor-pointer hover:bg-white/20 px-2 py-1 h-8"
                   >
                     <Plus className="w-3 h-3" />
                   </Button>
@@ -117,7 +117,7 @@ const TaskItem = ({ task, onUpdate, onDelete }: TaskItemProps) => {
                     onClick={() => setIsEditing(true)}
                     size="sm"
                     variant="outline"
-                    className="border-white/30 text-black/95 cursor-pointer hover:bg-white/20 px-2 py-1 h-8"
+                    className="border-white/30 text-white cursor-pointer hover:bg-white/20 px-2 py-1 h-8"
                   >
                     <Edit3 className="w-3 h-3" />
                   </Button>
@@ -126,7 +126,7 @@ const TaskItem = ({ task, onUpdate, onDelete }: TaskItemProps) => {
                     onClick={() => onDelete(task.id)}
                     size="sm"
                     variant="outline"
-                    className="border-white/30 text-black/95 hover:bg-white/20 cursor-pointer px-2 py-1 h-8"
+                    className="border-white/30 text-white hover:bg-white/20 cursor-pointer px-2 py-1 h-8"
                   >
                     <Trash2 className="w-3 h-3" />
                   </Button>

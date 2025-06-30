@@ -1,11 +1,18 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Settings } from 'lucide-react';
 import { useSettings } from '@/components/MainSection/SettingsContext';
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+
+useEffect(() => {
+  const handleOpen = () => setOpen(true);
+  document.addEventListener('open-settings', handleOpen);
+  return () => document.removeEventListener('open-settings', handleOpen);
+}, []);
+
   const { settings, updateSettings } = useSettings();
 
   return (
@@ -127,3 +134,4 @@ export default function Header() {
     </>
   );
 }
+

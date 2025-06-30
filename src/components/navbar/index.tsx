@@ -1,21 +1,21 @@
 "use client";
-import Settings from '../MainSection/Header';
 import Logo from '../logo';
 import { useState } from 'react';
 import Link from 'next/link';
 
-export default function Navbar() {
+interface NavbarProps {
+    className?: string;
+}
+
+export default function Navbar({ className = "" }: NavbarProps) {
     const [] = useState(false);
 
     return (
-        <nav className="bg-white flex items-center justify-between px-5 border-b border-gray-300">
-            <div className="flex items-center w-full justify-between">
-            <Link href="/" className="navbar-item flex-shrink-0 px-18">
-                <Logo />
-            </Link>
-            <div className="flex items-center">
-                <Settings />
-            </div>
+        <nav className={className}>
+            <div className="flex items-center justify-between p-4">
+                <Link href="/">
+                    <Logo />
+                </Link>
             </div>
         </nav>
     );

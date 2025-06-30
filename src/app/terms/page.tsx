@@ -3,8 +3,8 @@ import React from 'react';
 
 const Terms = () => {
     return (
-<div className="bg-white -mb-16">
-    <div className="container mx-auto px-4 py-8 sm:px-6 lg:px-8">
+<div className="bg-white min-h-screen">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Content */}
         <div className="bg-white backdrop-blur-sm p-4 sm:p-6 md:p-8 max-w-full sm:max-w-2xl mx-auto">
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-6 sm:mb-8">Terms and Conditions</h1>

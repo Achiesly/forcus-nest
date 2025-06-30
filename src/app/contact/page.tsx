@@ -5,8 +5,10 @@ import { Mail, } from 'lucide-react';
 export default function ContactPage() {
     return (
 
-    <main className="bg-white flex items-center justify-center px-2 sm:px-4 py-10 sm:py-15 -mb-16 ">
-      <div className="w-full max-w-md sm:max-w-xl bg-white p-4 sm:p-8 ">
+    <div className="bg-white">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Content */}
+      <div className="bg-white backdrop-blur-sm p-4 sm:p-6 md:p-8 max-w-full sm:max-w-2xl mx-auto mt-10 mb-11">
         <h1 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4 text-gray-900">Contact</h1>
         <p className="text-gray-600 mb-4 sm:mb-6 leading-relaxed text-xs sm:text-base">
           We&apos;re here to help! Whether you have a question, suggestion, or just want to say hi,
@@ -40,6 +42,7 @@ export default function ContactPage() {
           </div>
         </div>
       </div>
-    </main>
+    </div>
+    </div>
     );
 }

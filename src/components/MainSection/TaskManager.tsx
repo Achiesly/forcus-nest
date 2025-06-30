@@ -1,3 +1,4 @@
+
 "use client";
 import React, { useState, useEffect } from 'react';
 import { Plus, Clock } from 'lucide-react';
@@ -18,11 +19,8 @@ interface Task {
   estimatedPomodoros: number;
 }
 
-interface TaskManagerProps {
-  tier: string;
-}
 
-const TaskManager: React.FC<TaskManagerProps> = ({ }) => {
+const TaskManager: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTask, setNewTask] = useState('');
   const [isAdding, setIsAdding] = useState(false);
@@ -69,10 +67,10 @@ const TaskManager: React.FC<TaskManagerProps> = ({ }) => {
   }, [tasks]);
 
   return (
-<div className="bg-blue-700 rounded-2xl p-4 sm:p-6 text-white container mx-auto max-w-[95%] sm:max-w-3xl shadow-lg">
+<div className="bg-gray-700 rounded-2xl p-4 sm:p-6 text-white container mx-auto max-w-[95%] sm:max-w-3xl shadow-lg">
   {/* Header */}
   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
-    <h2 className="text-lg sm:text-xl font-semibold">Tasks</h2>
+    <h2 className="text-xl sm:text-xl font-bold">Tasks</h2>
     <div className="text-sm text-left sm:text-right">
       <div>{completedTasks}/{tasks.length} completed</div>
       <div className="flex items-center gap-1 mt-1">
@@ -94,7 +92,7 @@ const TaskManager: React.FC<TaskManagerProps> = ({ }) => {
     ))}
 
     {tasks.length === 0 && !isAdding && (
-      <div className="text-center py-8 text-white/70">
+      <div className="text-center py-8 text-white/80">
         <Clock className="w-12 h-12 mx-auto mb-3 opacity-50" />
         <p>No tasks yet. Add one to get started!</p>
       </div>
@@ -108,14 +106,14 @@ const TaskManager: React.FC<TaskManagerProps> = ({ }) => {
         value={newTask}
         onChange={(e) => setNewTask(e.target.value)}
         placeholder="What are you working on?"
-        className="bg-white/20 border-white/30 text-white placeholder:text-white/60 w-full"
+        className="bg-white/20 border-white/30 text-white placeholder:text-white/60 w-full focus:ring-1 focus:ring-white/10"
         onKeyDown={(e) => e.key === 'Enter' && addTask()}
         autoFocus
       />
       <div className="flex flex-col sm:flex-row gap-2">
         <Button
           onClick={addTask}
-          className="bg-white text-black/90 hover:bg-white/90 flex-1 cursor-pointer"
+          className="bg-white text-black hover:bg-white/95 flex-1 cursor-pointer"
         >
           <Plus className="w-4 h-4 mr-2" />
           Add Task
@@ -127,7 +125,7 @@ const TaskManager: React.FC<TaskManagerProps> = ({ }) => {
             setNewTask('');
           }}
           variant="outline"
-          className="border-white/30 text-red-500 hover:bg-white/90 hover:text-red-500 cursor-pointer"
+          className="border-white/30 text-white hover:bg-white/90 hover:text-black cursor-pointer"
         >
           Cancel
         </Button>
