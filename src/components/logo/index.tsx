@@ -9,7 +9,7 @@ interface FocusNestLogoProps {
 
 const FocusNestLogo: React.FC<FocusNestLogoProps> = ({ size = 'md', className = '' }) => {
   const sizeClasses: Record<Size, string> = {
-    sm: 'text-xl px-4',
+    sm: 'text-xl px-1 py-1',
     md: 'text-3xl px-12 py-2',
     lg: 'text-3xl px-8',
     xl: 'text-4xl px-10'
