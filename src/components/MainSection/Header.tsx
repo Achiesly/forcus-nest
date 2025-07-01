@@ -1,130 +1,163 @@
 'use client';
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import { useSettings } from '@/components/MainSection/SettingsContext';
 
 export default function Header() {
   const [open, setOpen] = useState(false);
-  
-// Listen for custom event to open settings modal
-useEffect(() => {
-  const handleOpen = () => setOpen(true);
-  document.addEventListener('open-settings', handleOpen);
-  return () => document.removeEventListener('open-settings', handleOpen);
-}, []);
+
+  // Listen for custom event to open settings modal
+  useEffect(() => {
+    const handleOpen = () => setOpen(true);
+    document.addEventListener('open-settings', handleOpen);
+    return () => document.removeEventListener('open-settings', handleOpen);
+  }, []);
 
   const { settings, updateSettings } = useSettings();
 
+  const handleTestSound = () => {
+    const audio = new Audio(`/sounds/${settings.alarm || 'beep'}.mp3`);
+    audio.volume = settings.soundVolume ?? 1.0;
+    audio.play().catch(() => {
+      alert('Failed to play sound. Check if your browser allows autoplay.');
+    });
+  };
+
   return (
     <>
-{/* Header */}
-<header className="hidden" />
+      {/* Header */}
+      <header className="hidden" />
 
-{/* Settings Modal */}
-{open && (
-  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
-    <div className="bg-white rounded-lg p-4 sm:p-6 w-full max-w-md space-y-4 text-black shadow-lg">
-      
-      {/* Durations */}
-      <div className="space-y-3">
-        {['pomodoro', 'shortBreak', 'longBreak'].map((key) => (
-          <div key={key} className="flex justify-between items-center">
-            <label className="capitalize">
-              {key === 'pomodoro'
-                ? 'Pomodoro'
-                : key === 'shortBreak'
-                ? 'Short Break'
-                : 'Long Break'}
-            </label>
-            <input
-              type="number"
-              min={1}
-              value={settings.durations[key as keyof typeof settings.durations]}
-              onChange={(e) =>
-                updateSettings({
-                  durations: {
-                    ...settings.durations,
-                    [key]: parseInt(e.target.value),
-                  },
-                })
-              }
-              className="border px-2 py-1 rounded w-20 text-right"
-            />
+      {/* Settings Modal */}
+      {open && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
+          <div className="bg-white rounded-lg p-4 sm:p-6 w-full max-w-md space-y-4 text-black shadow-lg">
+            {/* Durations */}
+            <div className="space-y-3">
+              {['pomodoro', 'shortBreak', 'longBreak'].map((key) => (
+                <div key={key} className="flex justify-between items-center">
+                  <label className="capitalize">
+                    {key === 'pomodoro'
+                      ? 'Pomodoro'
+                      : key === 'shortBreak'
+                      ? 'Short Break'
+                      : 'Long Break'}
+                  </label>
+                  <input
+                    type="number"
+                    min={1}
+                    value={settings.durations[key as keyof typeof settings.durations]}
+                    onChange={(e) =>
+                      updateSettings({
+                        durations: {
+                          ...settings.durations,
+                          [key]: parseInt(e.target.value),
+                        },
+                      })
+                    }
+                    className="border px-2 py-1 rounded w-20 text-right"
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* Alarm Sound */}
+            <div className="flex flex-col gap-2">
+              <label>Alarm Sound</label>
+              <select
+                value={settings.alarm}
+                onChange={(e) => updateSettings({ alarm: e.target.value })}
+                className="border px-2 py-1 rounded"
+              >
+                <option value="beep">Beep</option>
+                <option value="bell">Bell</option>
+                <option value="ding">Ding</option>
+                <option value="wood">Wood</option>
+              </select>
+
+              <button
+                onClick={handleTestSound}
+                className="mt-1 px-3 py-1 bg-gray-100 text-sm text-black rounded hover:bg-gray-200"
+              >
+                Test Sound
+              </button>
+            </div>
+
+            {/* Sound Volume */}
+            <div className="flex flex-col gap-2">
+              <label htmlFor="volume">
+                Sound Volume ({Math.round((settings.soundVolume ?? 1.0) * 100)}%)
+              </label>
+              <input
+                type="range"
+                id="volume"
+                min={0}
+                max={1}
+                step={0.01}
+                value={settings.soundVolume ?? 1.0}
+                onChange={(e) =>
+                  updateSettings({ soundVolume: parseFloat(e.target.value) })
+                }
+                className="w-full"
+              />
+            </div>
+
+            {/* Toggle Options */}
+            <div className="space-y-2">
+              <div className="flex justify-between items-center">
+                <span>Notifications</span>
+                <input
+                  type="checkbox"
+                  checked={settings.notification}
+                  onChange={(e) => updateSettings({ notification: e.target.checked })}
+                />
+              </div>
+              <div className="flex justify-between items-center">
+                <span>Sound</span>
+                <input
+                  type="checkbox"
+                  checked={settings.sound}
+                  onChange={(e) => updateSettings({ sound: e.target.checked })}
+                />
+              </div>
+            </div>
+
+            {/* Theme Selection */}
+            <div className="flex flex-col">
+              <label>Theme</label>
+              <select
+                value={settings.theme}
+                onChange={(e) =>
+                  updateSettings({
+                    theme: e.target.value as 'system' | 'light' | 'dark',
+                  })
+                }
+                className="border px-2 py-1 rounded"
+              >
+                <option value="system">System</option>
+                <option value="light">Light</option>
+                <option value="dark">Dark</option>
+              </select>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex justify-end pt-4 gap-3">
+              <button
+                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+                onClick={() => setOpen(false)}
+              >
+                Save
+              </button>
+              <button
+                className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition"
+                onClick={() => setOpen(false)}
+              >
+                Close
+              </button>
+            </div>
           </div>
-        ))}
-      </div>
-
-      {/* Alarm Selection */}
-      <div className="flex flex-col gap-2">
-        <label>Alarm Sound</label>
-        <select
-          value={settings.alarm}
-          onChange={(e) => updateSettings({ alarm: e.target.value })}
-          className="border px-2 py-1 rounded"
-        >
-          <option value="beep">Beep</option>
-          <option value="bell">Bell</option>
-          <option value="ding">Ding</option>
-        </select>
-      </div>
-
-      {/* Toggle Options */}
-      <div className="space-y-2">
-        <div className="flex justify-between items-center">
-          <span>Notifications</span>
-          <input
-            type="checkbox"
-            checked={settings.notification}
-            onChange={(e) => updateSettings({ notification: e.target.checked })}
-          />
         </div>
-        <div className="flex justify-between items-center">
-          <span>Sound</span>
-          <input
-            type="checkbox"
-            checked={settings.sound}
-            onChange={(e) => updateSettings({ sound: e.target.checked })}
-          />
-        </div>
-      </div>
-
-      {/* Theme Selection */}
-      <div className="flex flex-col">
-        <label>Theme</label>
-        <select
-          value={settings.theme}
-          onChange={(e) =>
-            updateSettings({
-              theme: e.target.value as 'system' | 'light' | 'dark',
-            })
-          }
-          className="border px-2 py-1 rounded"
-        >
-          <option value="system">System</option>
-          <option value="light">Light</option>
-          <option value="dark">Dark</option>
-        </select>
-      </div>
-
-      {/* Action Buttons */}
-      <div className="flex justify-end pt-4 gap-3">
-        <button
-          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
-          onClick={() => setOpen(false)}
-        >
-          Save
-        </button>
-        <button
-          className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition"
-          onClick={() => setOpen(false)}
-        >
-          Close
-        </button>
-      </div>
-    </div>
-  </div>
-)}
+      )}
     </>
   );
 }
-

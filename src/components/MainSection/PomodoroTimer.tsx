@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button';
 import { useSettings } from '@/components/MainSection/SettingsContext';
 import { FaArrowRotateRight } from "react-icons/fa6";
 import { IoMdSettings } from "react-icons/io";
+import { useMemo as reactUseMemo } from 'react';
+import { useCallback } from 'react';
 //import Settings from '../MainSection/Header';
 
 
@@ -13,11 +15,18 @@ import { IoMdSettings } from "react-icons/io";
 
 type TimerMode = 'pomodoro' | 'shortBreak' | 'longBreak';
 
+// Default durations
+const defaultDurations = { pomodoro: 25, shortBreak: 5, longBreak: 15 };
+
 const PomodoroTimer: React.FC = () => {
   const { settings } = useSettings();
+  const durations = settings.durations ?? defaultDurations;
+
+
 
   const [mode, setMode] = useState<TimerMode>('pomodoro');
-  const [timeLeft, setTimeLeft] = useState(25 * 60); // 25 minutes in seconds
+const initialDuration = (settings.useDefaults ? defaultDurations.pomodoro : durations.pomodoro) * 60;
+const [timeLeft, setTimeLeft] = useState(initialDuration);
   const [isRunning, setIsRunning] = useState(false);
   const [session, setSession] = useState(1);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -35,78 +44,81 @@ const PomodoroTimer: React.FC = () => {
 }, [isRunning]);
 
 
-// Default durations
-const defaultDurations = { pomodoro: 25, shortBreak: 5, longBreak: 15 };
-
-
-const modes = React.useMemo(() => ({
+const modes = useMemo(() => ({
   pomodoro: {
-    duration: (settings.useDefaults ? defaultDurations.pomodoro : settings.durations.pomodoro) * 60,
+    duration: (settings.useDefaults ? defaultDurations.pomodoro : durations.pomodoro) * 60,
     label: 'Pomodoro',
     color: 'from-red-400 to-red-600'
   },
   shortBreak: {
-    duration: (settings.useDefaults ? defaultDurations.shortBreak : settings.durations.shortBreak) * 60,
+    duration: (settings.useDefaults ? defaultDurations.shortBreak : durations.shortBreak) * 60,
     label: 'Short Break',
     color: 'from-green-400 to-green-600'
   },
   longBreak: {
-    duration: (settings.useDefaults ? defaultDurations.longBreak : settings.durations.longBreak) * 60,
+    duration: (settings.useDefaults ? defaultDurations.longBreak : durations.longBreak) * 60,
     label: 'Long Break',
     color: 'from-blue-400 to-blue-600'
   }
-}), [settings, defaultDurations.pomodoro, defaultDurations.shortBreak, defaultDurations.longBreak]);
+}), [settings.useDefaults, durations]);
 
+// Function to play notification sound
 
+const playNotificationSound = useCallback(() => {
+  const soundEnabled = settings?.sound ?? true;
+  const soundVolume = settings?.soundVolume ?? 1.0;
+  const alarm = settings?.alarm ?? 'bell';
 
-  // Function to play notification sound
-  const playNotificationSound = () => {
+  if (!soundEnabled) return;
+
+  const audio = new Audio(`/sounds/${alarm}.mp3`);
+  audio.volume = soundVolume;
+
+  audio.play().catch((err) => {
+    console.warn('Failed to play audio from /sounds:', err);
+
+    // Fallback: Use Web Audio API
     try {
-      const audioContext = new (
+      const audioCtx = new (
         window.AudioContext ||
-        (window as typeof window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext
+        ((window as unknown) as { webkitAudioContext: typeof AudioContext }).webkitAudioContext
       )();
-      
-      // Create a bell-like sound using multiple frequencies
-      const frequencies = [800, 1000, 1200]; // Bell-like frequencies
-      const duration = 0.8; // Sound duration in seconds
-      
-      frequencies.forEach((freq, index) => {
-        const oscillator = audioContext.createOscillator();
-        const gainNode = audioContext.createGain();
-        
-        oscillator.connect(gainNode);
-        gainNode.connect(audioContext.destination);
-        
-        oscillator.frequency.setValueAtTime(freq, audioContext.currentTime);
-        oscillator.type = 'sine';
-        
-        // Create envelope for bell-like sound
-        gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-        gainNode.gain.linearRampToValueAtTime(0.1 / frequencies.length, audioContext.currentTime + 0.01);
-        gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration);
-        
-        oscillator.start(audioContext.currentTime + index * 0.1);
-        oscillator.stop(audioContext.currentTime + duration + index * 0.1);
-      });
-    } catch {
-      console.log('Audio not supported or failed to play');
-      // Fallback: try to use a simple beep
-      try {
-        const audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhGAhGn+Pwtm0hGAhFouPwqm0hGAhFouPwqm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+Pwtm0hGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+PwqmwfGAhGn+Pw==');
-        audio.play();
-      } catch {
-        console.log('No audio support available');
-      }
-    }
-  };
+      const gainNode = audioCtx.createGain();
+      gainNode.gain.value = soundVolume;
+      gainNode.connect(audioCtx.destination);
 
-    // 🔧 Request notification permission on first load
-  useEffect(() => {
-    if (typeof window !== 'undefined' && Notification.permission !== 'granted') {
-      Notification.requestPermission();
+      const frequencies = [800, 1000];
+      const now = audioCtx.currentTime;
+
+      frequencies.forEach((freq, i) => {
+        const osc = audioCtx.createOscillator();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, now + i * 0.1);
+        osc.connect(gainNode);
+        osc.start(now + i * 0.1);
+        osc.stop(now + i * 0.1 + 0.5);
+      });
+    } catch (fallbackErr) {
+      console.error('Both audio fallback methods failed', fallbackErr);
     }
-  }, []);
+  });
+}, [settings?.sound, settings?.soundVolume, settings?.alarm]);
+
+
+// Request notification permission
+useEffect(() => {
+  if (typeof window !== 'undefined' && Notification.permission !== 'granted') {
+    Notification.requestPermission();
+  }
+}, []);
+
+// 🔄 Reset everything on reload
+useEffect(() => {
+  setTimeLeft(initialDuration);
+  setIsRunning(false);
+  setMode('pomodoro');
+  setSession(1);
+}, [initialDuration]);
 
   useEffect(() => {
     if (isRunning && timeLeft > 0) {
@@ -143,7 +155,7 @@ const modes = React.useMemo(() => ({
         clearInterval(intervalRef.current);
       }
     };
-  }, [isRunning, timeLeft, mode, session, modes]);
+  }, [isRunning, timeLeft, mode, session, modes, playNotificationSound]);
 
   const handleModeChange = (newMode: TimerMode) => {
     setMode(newMode);
@@ -246,5 +258,8 @@ const modes = React.useMemo(() => ({
 
   );
 };
-
 export default PomodoroTimer;
+
+function useMemo<T>(factory: () => T, deps: React.DependencyList): T {
+  return reactUseMemo(factory, deps);
+}

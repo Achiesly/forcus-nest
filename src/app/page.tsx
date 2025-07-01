@@ -8,6 +8,7 @@ import FAQSection from '@/components/MainSection/faq';
 import Navbar from '@/components/navbar';
 import Header from '@/components/MainSection/Header';
 
+
 export const metadata = {
   title: 'FocusNest-Free Pomodoro Timer for Deep Work & Study',
   description:

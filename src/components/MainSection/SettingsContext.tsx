@@ -3,17 +3,25 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 
 export interface SettingsType {
-  useDefaults?: boolean; // Optional to allow custom durations
+  useDefaults?: boolean;
   durations: { pomodoro: number; shortBreak: number; longBreak: number };
   sound: boolean;
+  soundVolume: number; // 👈 New
   notification: boolean;
-  alarm: string;
+  alarm: string; // e.g. "beep", "ding"
   theme: 'light' | 'dark' | 'system';
 }
 
+const defaultDurations = {
+  pomodoro: 25,
+  shortBreak: 5,
+  longBreak: 15,
+};
+
 const defaultSettings: SettingsType = {
-  durations: { pomodoro: 25, shortBreak: 5, longBreak: 15 },
+  durations: defaultDurations,
   sound: true,
+  soundVolume: 1.0, // 👈 New default volume
   notification: true,
   alarm: 'beep',
   theme: 'system',
@@ -33,7 +41,17 @@ export const SettingsProvider = ({ children }: { children: React.ReactNode }) =>
       const saved = localStorage.getItem('focusnest-settings');
       if (saved) {
         try {
-          return JSON.parse(saved);
+          const parsed = JSON.parse(saved);
+
+          // ✅ Merge saved settings with defaults safely
+          return {
+            ...defaultSettings,
+            ...parsed,
+            durations: {
+              ...defaultDurations,
+              ...(parsed.durations || {}),
+            },
+          };
         } catch (err) {
           console.error('Failed to parse settings from localStorage:', err);
         }
@@ -42,7 +60,6 @@ export const SettingsProvider = ({ children }: { children: React.ReactNode }) =>
     return defaultSettings;
   });
 
-  // ✅ Save to localStorage whenever settings change
   useEffect(() => {
     if (typeof window !== 'undefined') {
       localStorage.setItem('focusnest-settings', JSON.stringify(settings));
@@ -50,7 +67,14 @@ export const SettingsProvider = ({ children }: { children: React.ReactNode }) =>
   }, [settings]);
 
   const updateSettings = (updates: Partial<SettingsType>) => {
-    setSettings((prev) => ({ ...prev, ...updates }));
+    setSettings((prev) => ({
+      ...prev,
+      ...updates,
+      durations: {
+        ...prev.durations,
+        ...(updates.durations || {}),
+      },
+    }));
   };
 
   return (
