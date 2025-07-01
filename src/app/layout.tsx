@@ -25,21 +25,22 @@ export default function RootLayout({
         <meta name="theme-color" content="#1e3a8a" />
       </head>
       
-      <body className={inter.className}>
-          {/* Navbar component */}
-          
-          {/* Main content goes here */}
+      <body className={`${inter.className} min-h-screen flex flex-col`}>
         <SettingsProvider>
-          {/* Main section with children components */}
-          {children}
-          {/* Analytics and Speed Insights components */}
+          {/* Main content that expands to push footer down */}
+          <div className="flex-grow">
+            {children}
+          </div>
+
+          {/* Footer always sticks at the bottom if page is short */}
+          <Footer />
+
+          {/* Analytics and Performance Tools */}
           <Analytics />
           <SpeedInsights />
-          {/* Footer component */}
-          {/* Footer is placed here to ensure it appears at the bottom of the page */}
-          <Footer />
         </SettingsProvider>
       </body>
+
     </html>
   );
 }

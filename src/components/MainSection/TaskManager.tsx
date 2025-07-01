@@ -25,6 +25,12 @@ const TaskManager: React.FC = () => {
   const [newTask, setNewTask] = useState('');
   const [isAdding, setIsAdding] = useState(false);
 
+  const [isHydrated, setIsHydrated] = useState(false);
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
+
+
   const addTask = () => {
     if (newTask.trim()) {
       const task: Task = {
@@ -61,12 +67,15 @@ const TaskManager: React.FC = () => {
     }
   }, []);
 
+
+
   // Save to localStorage when tasks change
   useEffect(() => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
   }, [tasks]);
 
   return (
+    isHydrated ? (
 <div className="bg-gray-700 rounded-2xl p-4 sm:p-6 text-white container mx-auto max-w-[95%] sm:max-w-3xl shadow-lg">
   {/* Header */}
   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
@@ -81,7 +90,7 @@ const TaskManager: React.FC = () => {
   </div>
 
   {/* Task List */}
-  <div className="space-y-3 mb-6">
+  <div className="space-y-3 mb-6 min-h-[180px]">
     {tasks.map(task => (
       <TaskItem
         key={task.id}
@@ -141,6 +150,7 @@ const TaskManager: React.FC = () => {
     </Button>
   )}
 </div>
+    ) :null
 
   );
 };

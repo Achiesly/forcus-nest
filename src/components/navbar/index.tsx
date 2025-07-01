@@ -4,19 +4,30 @@ import { useState } from 'react';
 import Link from 'next/link';
 
 interface NavbarProps {
-    className?: string;
+  className?: string;
 }
 
 export default function Navbar({ className = "" }: NavbarProps) {
-    const [] = useState(false);
+  const [] = useState(false); // this state isn't used, you can safely remove it
 
-    return (
-        <nav className={className}>
-            <div className="flex items-center justify-between px-4 p-4 sm:px-2 md:px-1 lg:px-3 mb-4 md:mb-0 p-2 sm:p-0 md:p-4">
-                <Link href="/">
-                    <Logo />
-                </Link>
-            </div>
-        </nav>
-    );
+  return (
+    <nav className={`w-full ${className}`}>
+      <div className="flex items-center justify-between px-4 py-3 sm:px-6 md:px-8 lg:px-10">
+        {/* Logo */}
+        <Link
+        href="/"
+        className="flex items-center justify-start sm:justify-center"
+        >
+        <Logo />
+        </Link>
+
+        {/* Future nav items or menu button could go here */}
+        {/* Example: 
+        <div className="hidden sm:flex space-x-4">
+          <Link href="/about" className="text-white hover:underline">About</Link>
+        </div> 
+        */}
+      </div>
+    </nav>
+  );
 }

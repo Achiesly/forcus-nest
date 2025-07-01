@@ -11,8 +11,6 @@ import { useCallback } from 'react';
 
 
 
-
-
 type TimerMode = 'pomodoro' | 'shortBreak' | 'longBreak';
 
 // Default durations
@@ -181,12 +179,12 @@ useEffect(() => {
   const progress = ((modes[mode].duration - timeLeft) / modes[mode].duration) * 100;
 
   return (
-<div className="flex flex-col items-center space-y-8 mb-8 px-4 sm:px-6 -mt-6">
+<div className="flex flex-col items-center space-y-8 mb-8 px-4 sm:px-6 mt-1">
   <div className="bg-transparent backdrop-blur-sm rounded-full p-0 flex flex-wrap justify-center gap-2 sm:space-x-2">  {Object.entries(modes).map(([key, config]) => (
       <button
         key={key}
         onClick={() => handleModeChange(key as TimerMode)}
-        className={`px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base rounded-full font-medium transition-all duration-200 cursor-pointer border border-white/50 ${
+        className={`px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base rounded-full font-medium duration-200 cursor-pointer border border-white/50 ${
           mode === key
             ? 'bg-white text-black/95 shadow-lg'
             : 'text-white hover:bg-white hover:text-black'

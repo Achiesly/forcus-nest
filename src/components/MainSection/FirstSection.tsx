@@ -92,7 +92,7 @@ export default function FirstSection() {
             </section>
 
           {/* Productivity Tips */}
-            <section className="px-4 py-8 sm:p-8 md:p-10 rounded-3xl shadow-lg mb-12 bg-gradient-to-br from-sky-600 via-blue-500 to-indigo-500">
+            <section className="px-4 py-8 sm:p-8 md:p-10 rounded-3xl shadow-lg mb-12 bg-gradient-to-br from-sky-600 via-blue-500 to-sky-600">
             <h2 className="text-2xl sm:text-3xl font-bold mb-8 sm:mb-10 text-center text-gray-900">
               Pro Tips for Maximum Productivity
             </h2>

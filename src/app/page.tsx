@@ -9,6 +9,7 @@ import Navbar from '@/components/navbar';
 import Header from '@/components/MainSection/Header';
 
 
+
 export const metadata = {
   title: 'FocusNest-Free Pomodoro Timer for Deep Work & Study',
   description:
@@ -46,6 +47,7 @@ export const metadata = {
 
 export default function Home() {
   return (
+    
     <main className="flex flex-col min-h-screen text-white bg-gradient-to-br from-gray-900 via-gray-800 to-black">
       {/* JSON-LD Structured Data for SEO */}
       <script
@@ -63,13 +65,21 @@ export default function Home() {
         }}
       />
 
+
+      {/* Theme wrapper for dark mode */}
+      
+     
       <Navbar className="mt-4" />
       {/* Main content */} 
+     
       <Header />
       <PomodoroTimer />
       <TaskManager />
+      {/* Additional sections */} 
       <FirstSection />
       <FAQSection />
     </main>
+   
   );
 }
+

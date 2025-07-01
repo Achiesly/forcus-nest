@@ -1,16 +1,29 @@
 'use client';
 
 import { createContext, useContext, useState, useEffect } from 'react';
+import { setCookie } from 'cookies-next';
+
+
+export type ThemeOption =
+  | 'light'
+  | 'dark'
+  | 'system'
+  | 'cupcake'
+  | 'dracula'
+  | 'nord'
+  | 'sunset';
 
 export interface SettingsType {
   useDefaults?: boolean;
   durations: { pomodoro: number; shortBreak: number; longBreak: number };
   sound: boolean;
-  soundVolume: number; // 👈 New
+  soundVolume: number;
   notification: boolean;
-  alarm: string; // e.g. "beep", "ding"
-  theme: 'light' | 'dark' | 'system';
+  alarm: string;
+  theme: ThemeOption; // 👈 Use expanded ThemeOption type
 }
+
+
 
 const defaultDurations = {
   pomodoro: 25,
@@ -23,8 +36,8 @@ const defaultSettings: SettingsType = {
   sound: true,
   soundVolume: 1.0, // 👈 New default volume
   notification: true,
-  alarm: 'beep',
-  theme: 'system',
+  alarm: 'bell',
+  theme: 'cupcake', // 👈 Default theme
 };
 
 const SettingsContext = createContext<{
@@ -34,6 +47,8 @@ const SettingsContext = createContext<{
   settings: defaultSettings,
   updateSettings: () => {},
 });
+
+
 
 export const SettingsProvider = ({ children }: { children: React.ReactNode }) => {
   const [settings, setSettings] = useState<SettingsType>(() => {
@@ -65,6 +80,7 @@ export const SettingsProvider = ({ children }: { children: React.ReactNode }) =>
       localStorage.setItem('focusnest-settings', JSON.stringify(settings));
     }
   }, [settings]);
+  
 
   const updateSettings = (updates: Partial<SettingsType>) => {
     setSettings((prev) => ({
@@ -75,7 +91,25 @@ export const SettingsProvider = ({ children }: { children: React.ReactNode }) =>
         ...(updates.durations || {}),
       },
     }));
+
+    // ✅ Save theme to cookie (7-day expiry)
+    if (updates.theme) {
+      setCookie('theme', updates.theme, { maxAge: 60 * 60 * 24 * 7 }); // 7 days
+    }
   };
+
+useEffect(() => {
+  const root = document.documentElement;
+
+  if (settings.theme === 'system') {
+    const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    root.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  } else {
+    root.setAttribute('data-theme', settings.theme);
+  }
+}, [settings.theme]);
+
+
 
   return (
     <SettingsContext.Provider value={{ settings, updateSettings }}>

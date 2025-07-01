@@ -15,7 +15,7 @@ const Footer = () => {
           <Link href="/contact" className="text-blue-700 hover:text-blue-600 text-12sm font-medium transition-colors duration-200">Contact</Link>
         </div>
 
-        <div className="text-center mt-4 text-gray-500 text-xs mb-4">
+        <div className="text-center -mt-5 text-gray-500 text-xs mb-6">
            Copyright © {new Date().getFullYear()} ForcusNest. All rights reserved.
         </div>
     

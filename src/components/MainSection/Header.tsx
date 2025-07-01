@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSettings } from '@/components/MainSection/SettingsContext';
 
+
 export default function Header() {
   const [open, setOpen] = useState(false);
 
@@ -14,14 +15,6 @@ export default function Header() {
   }, []);
 
   const { settings, updateSettings } = useSettings();
-
-  const handleTestSound = () => {
-    const audio = new Audio(`/sounds/${settings.alarm || 'beep'}.mp3`);
-    audio.volume = settings.soundVolume ?? 1.0;
-    audio.play().catch(() => {
-      alert('Failed to play sound. Check if your browser allows autoplay.');
-    });
-  };
 
   return (
     <>
@@ -66,7 +59,24 @@ export default function Header() {
               <label>Alarm Sound</label>
               <select
                 value={settings.alarm}
-                onChange={(e) => updateSettings({ alarm: e.target.value })}
+                onChange={(e) => {
+                  const selected = e.target.value;
+                  updateSettings({ alarm: selected });
+
+                  // Stop previous sound if playing
+                  if (window.currentAlarmAudio && typeof window.currentAlarmAudio.pause === 'function') {
+                    window.currentAlarmAudio.pause();
+                    window.currentAlarmAudio.currentTime = 0;
+                  }
+
+                  // Create and store new audio object
+                  const audio = new Audio(`/sounds/${selected}.mp3`);
+                  audio.volume = settings.soundVolume ?? 1.0;
+                  window.currentAlarmAudio = audio; // Store globally to stop next time
+                  audio.play().catch(() => {
+                    console.warn('Failed to play alarm sound');
+                  });
+                }}
                 className="border px-2 py-1 rounded"
               >
                 <option value="beep">Beep</option>
@@ -74,37 +84,31 @@ export default function Header() {
                 <option value="ding">Ding</option>
                 <option value="wood">Wood</option>
               </select>
-
-              <button
-                onClick={handleTestSound}
-                className="mt-1 px-3 py-1 bg-gray-100 text-sm text-black rounded hover:bg-gray-200"
-              >
-                Test Sound
-              </button>
             </div>
 
-            {/* Sound Volume */}
-            <div className="flex flex-col gap-2">
-              <label htmlFor="volume">
-                Sound Volume ({Math.round((settings.soundVolume ?? 1.0) * 100)}%)
-              </label>
-              <input
-                type="range"
-                id="volume"
-                min={0}
-                max={1}
-                step={0.01}
-                value={settings.soundVolume ?? 1.0}
-                onChange={(e) =>
-                  updateSettings({ soundVolume: parseFloat(e.target.value) })
+            <input
+              type="range"
+              id="volume"
+              min={0}
+              max={1}
+              step={0.01}
+              value={settings.soundVolume ?? 1.0}
+              onChange={(e) => {
+                const newVolume = parseFloat(e.target.value);
+                updateSettings({ soundVolume: newVolume });
+
+                // Live update the currently playing audio
+                if (window.currentAlarmAudio) {
+                  window.currentAlarmAudio.volume = newVolume;
                 }
-                className="w-full"
-              />
-            </div>
+              }}
+              className="w-full cursor-pointer"
+            />
+
 
             {/* Toggle Options */}
             <div className="space-y-2">
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center cursor-pointer">
                 <span>Notifications</span>
                 <input
                   type="checkbox"
@@ -112,7 +116,7 @@ export default function Header() {
                   onChange={(e) => updateSettings({ notification: e.target.checked })}
                 />
               </div>
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center cursor-pointer">
                 <span>Sound</span>
                 <input
                   type="checkbox"
@@ -122,39 +126,61 @@ export default function Header() {
               </div>
             </div>
 
-            {/* Theme Selection */}
+            {/* Theme Selection (disabled for now) */}
+            {/* 
             <div className="flex flex-col">
               <label>Theme</label>
               <select
-                value={settings.theme}
-                onChange={(e) =>
-                  updateSettings({
-                    theme: e.target.value as 'system' | 'light' | 'dark',
-                  })
-                }
-                className="border px-2 py-1 rounded"
+              value={settings.theme}
+              onChange={(e) =>
+                updateSettings({
+                theme: e.target.value as ThemeOption,
+                })
+              }
+              className="border px-2 py-1 rounded"
+              disabled
               >
-                <option value="system">System</option>
-                <option value="light">Light</option>
-                <option value="dark">Dark</option>
+              <option value="light">Light</option>
+              <option value="dark">Dark</option>
+              <option value="system">System</option>
+              <option value="dracula">Dracula</option>
+              <option value="nord">Nord</option>
+              <option value="sunset">Sunset</option>
+              <option value="cupcake">Cupcake</option>
               </select>
             </div>
+            */}
 
             {/* Action Buttons */}
             <div className="flex justify-end pt-4 gap-3">
               <button
-                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
-                onClick={() => setOpen(false)}
+                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition cursor-pointer"
+                onClick={() => {
+                  // Stop any currently playing alarm
+                  if (window.currentAlarmAudio && !window.currentAlarmAudio.paused) {
+                    window.currentAlarmAudio.pause();
+                    window.currentAlarmAudio.currentTime = 0;
+                  }
+                  setOpen(false);
+                }}
               >
                 Save
               </button>
               <button
-                className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition"
-                onClick={() => setOpen(false)}
+                className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition cursor-pointer"
+                onClick={() => {
+                  // Stop any currently playing alarm
+                  if (window.currentAlarmAudio && !window.currentAlarmAudio.paused) {
+                    window.currentAlarmAudio.pause();
+                    window.currentAlarmAudio.currentTime = 0;
+                  }
+                  setOpen(false);
+                }}
               >
                 Close
               </button>
             </div>
+
           </div>
         </div>
       )}
