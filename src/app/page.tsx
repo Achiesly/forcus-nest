@@ -62,7 +62,8 @@ export default function Home() {
         }}
       />
 
-      <Navbar />
+      <Navbar className="mt-4" />
+      {/* Main content */} 
       <Header />
       <PomodoroTimer />
       <TaskManager />

@@ -8,37 +8,27 @@ interface FocusNestLogoProps {
 }
 
 const FocusNestLogo: React.FC<FocusNestLogoProps> = ({ size = 'md', className = '' }) => {
-  const sizeClasses: Record<Size, string> = {
-    sm: 'text-xl px-1 py-1',
-    md: 'text-3xl px-12 py-2',
+  const fontSizes: Record<Size, string> = {
+    sm: 'text-xl px-0 py-0',
+    md: 'text-2xl px-12 py-2',
     lg: 'text-3xl px-8',
-    xl: 'text-4xl px-10'
+    xl: 'text-4xl px-10',
   };
 
   return (
     <div className={`inline-block ${className}`}>
-      <div 
-        className={`
-          ${sizeClasses[size]}
-          
-        `}
+      <span
+        className={`${fontSizes[size]} font-bold tracking-wide ${className}`}
+        style={{
+          fontFamily: 'cursive, "Comic Sans MS", sans-serif',
+          textShadow: '1px 1px 2px rgba(0,0,0,0.1)'
+        }}
       >
-        <span 
-          className="
-             
-            font-bold
-            tracking-wide
-            
-          "
-          style={{
-            fontFamily: 'cursive, "Comic Sans MS", sans-serif',
-            textShadow: '1px 1px 2px rgba(0,0,0,0.1)'
-          }}
-        >
-          FocusNest
-        </span>
-      </div>
+        FocusNest
+      </span>
     </div>
   );
 };
 export default FocusNestLogo;
+
+
