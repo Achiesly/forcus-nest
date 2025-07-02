@@ -9,7 +9,7 @@ import {
 
 export default function FirstSection() {
   return (
-<div className="min-h-screen bg-white dark:bg-gray-900 mt-12 text-gray-900 dark:text-white px-4 sm:px-6">
+<div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white px-4 sm:px-6">
       <main className="container mx-auto px-4 py-4 max-w-6xl">
         <div className="space-y-16">
           {/* What is Pomodoro Technique */}
