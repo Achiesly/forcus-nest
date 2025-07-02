@@ -25,7 +25,7 @@ export default function RootLayout({
         <meta name="theme-color" content="#1e3a8a" />
       </head>
       
-      <body className={`${inter.className} min-h-screen flex flex-col`}>
+<body className={`${inter.className} min-h-screen flex flex-col pt-12`}>
         <SettingsProvider>
           {/* Main content that expands to push footer down */}
           <div className="flex-grow">
