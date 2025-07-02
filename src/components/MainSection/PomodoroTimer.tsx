@@ -324,7 +324,9 @@ useEffect(() => {
 
       {/* TaskManager */}
 
-    <div className="bg-gray-700 rounded-2xl p-4 sm:p-6 text-white container mx-auto max-w-[95%] sm:max-w-3xl shadow-lg">
+    <div className="bg-gray-700 rounded-2xl p-4 sm:p-6 md:p-8 text-white container mx-auto w-full max-w-screen-sm sm:max-w-2xl shadow-xl transition-all duration-300 mx-2 border border-white/10
+">
+
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
         <h2 className="text-xl sm:text-xl font-bold">Tasks</h2>
