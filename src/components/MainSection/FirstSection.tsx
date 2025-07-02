@@ -56,7 +56,7 @@ export default function FirstSection() {
 
           {/* Benefits */}
             <section className="p-10 mb-10 -mt-10 sm:p-12 -mt-12">
-            <h2 className="text-2xl sm:text-3xl md:text-3xl font-bold mb-10 text-center text-blue-600">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-10 text-center text-blue-600">
               Why Use the Pomodoro Technique?
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-8">
