@@ -10,6 +10,7 @@ import { useCallback } from 'react';
 import { Plus, Clock } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import TaskItem from './TaskItem';
+import AdBanner from '../AdBanner';
 //import Settings from '../MainSection/Header';
 
 
@@ -320,6 +321,14 @@ useEffect(() => {
     />
 
   </div>
+
+
+  {/* AdBanner */}
+  <div className="w-full flex justify-center my-4">
+    {/* Replace this with your actual AdBanner component */}
+    <AdBanner />
+  </div>
+
 
 
       {/* TaskManager */}

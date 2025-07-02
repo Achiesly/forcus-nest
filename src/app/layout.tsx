@@ -5,6 +5,7 @@ import './globals.css';
 import Footer from '@/components/footer';
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { SettingsProvider } from '@/components/MainSection/SettingsContext';
+import Script from 'next/script';
 
 
 const inter = Inter({ subsets: ['latin'] });
@@ -23,7 +24,15 @@ export default function RootLayout({
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
         <meta name="theme-color" content="#1e3a8a" />
-      </head>
+
+
+        <Script
+          strategy="afterInteractive"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4341873905679498"
+          crossOrigin="anonymous"
+        />
+
+        </head>
       
       <body className={`${inter.className} min-h-screen flex flex-col`}>
         <SettingsProvider>
