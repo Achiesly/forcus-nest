@@ -2,7 +2,6 @@
 
 import React from 'react';
 import PomodoroTimer from '@/components/MainSection/ClientOnlyPomodoro';
-import TaskManager from '@/components/MainSection/TaskManager';
 import FirstSection from '@/components/MainSection/FirstSection';
 import FAQSection from '@/components/MainSection/faq';
 import Navbar from '@/components/navbar';
@@ -74,7 +73,7 @@ export default function Home() {
      
       <Header />
       <PomodoroTimer />
-      <TaskManager />
+ 
       {/* Additional sections */} 
       <FirstSection />
       <FAQSection />

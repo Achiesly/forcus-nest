@@ -7,7 +7,21 @@ import { FaArrowRotateRight } from "react-icons/fa6";
 import { IoMdSettings } from "react-icons/io";
 import { useMemo as reactUseMemo } from 'react';
 import { useCallback } from 'react';
+import { Plus, Clock } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import TaskItem from './TaskItem';
 //import Settings from '../MainSection/Header';
+
+
+
+interface Task {
+  id: string;
+  text: string;
+  completed: boolean;
+  pomodoros: number;
+  estimatedPomodoros: number;
+}
+
 
 
 
@@ -20,9 +34,61 @@ const PomodoroTimer: React.FC = () => {
   const { settings } = useSettings();
   const durations = settings.durations ?? defaultDurations;
 
+ const [tasks, setTasks] = useState<Task[]>([]);
+  const [newTask, setNewTask] = useState('');
+  const [isAdding, setIsAdding] = useState(false);
 
 
-  const [mode, setMode] = useState<TimerMode>('pomodoro');
+    const addTask = () => {
+    if (newTask.trim()) {
+      const task: Task = {
+        id: Date.now().toString(),
+        text: newTask.trim(),
+        completed: false,
+        pomodoros: 0,
+        estimatedPomodoros: 1
+      };
+      setTasks([...tasks, task]);
+      setNewTask('');
+      setIsAdding(false);
+    }
+  };
+
+  const updateTask = (id: string, updates: Partial<Task>) => {
+    setTasks(tasks.map(task => 
+      task.id === id ? { ...task, ...updates } : task
+    ));
+  };
+
+  const deleteTask = (id: string) => {
+    setTasks(tasks.filter(task => task.id !== id));
+  };
+
+  const completedTasks = tasks.filter(task => task.completed).length;
+  const totalPomodoros = tasks.reduce((sum, task) => sum + task.pomodoros, 0);
+
+  // Load from localStorage
+  useEffect(() => {
+    const storedTasks = localStorage.getItem('tasks');
+    if (storedTasks) {
+      setTasks(JSON.parse(storedTasks));
+    }
+  }, []);
+
+
+
+  // Save to localStorage when tasks change
+  useEffect(() => {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }, [tasks]);
+
+
+
+
+
+
+
+const [mode, setMode] = useState<TimerMode>('pomodoro');
 const initialDuration = (settings.useDefaults ? defaultDurations.pomodoro : durations.pomodoro) * 60;
 const [timeLeft, setTimeLeft] = useState(initialDuration);
   const [isRunning, setIsRunning] = useState(false);
@@ -110,6 +176,8 @@ useEffect(() => {
   }
 }, []);
 
+
+
 // 🔄 Reset everything on reload
 useEffect(() => {
   setTimeLeft(initialDuration);
@@ -179,7 +247,7 @@ useEffect(() => {
   const progress = ((modes[mode].duration - timeLeft) / modes[mode].duration) * 100;
 
   return (
-<div className="flex flex-col items-center space-y-8 mb-8 px-4 sm:px-6 mt-1">
+<div className="flex flex-col items-center space-y-8 mb-8 px-4 sm:px-6 mt-4">
   <div className="bg-transparent backdrop-blur-sm rounded-full p-0 flex flex-wrap justify-center gap-2 sm:space-x-2">  {Object.entries(modes).map(([key, config]) => (
       <button
         key={key}
@@ -252,6 +320,86 @@ useEffect(() => {
     />
 
   </div>
+
+
+      {/* TaskManager */}
+
+    <div className="bg-gray-700 rounded-2xl p-4 sm:p-6 text-white container mx-auto max-w-[95%] sm:max-w-3xl shadow-lg">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
+        <h2 className="text-xl sm:text-xl font-bold">Tasks</h2>
+        <div className="text-sm text-left sm:text-right">
+          <div>{completedTasks}/{tasks.length} completed</div>
+          <div className="flex items-center gap-1 mt-1">
+            <Clock className="w-4 h-4" />
+            <span>{totalPomodoros} pomodoros</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Task List */}
+      <div className="space-y-3 mb-6 min-h-[180px]">
+        {tasks.map(task => (
+          <TaskItem
+            key={task.id}
+            task={task}
+            onUpdate={updateTask}
+            onDelete={deleteTask}
+          />
+        ))}
+
+        {tasks.length === 0 && !isAdding && (
+          <div className="text-center py-8 text-white/80">
+            <Clock className="w-12 h-12 mx-auto mb-3 opacity-50" />
+            <p>No tasks yet. Add one to get started!</p>
+          </div>
+        )}
+      </div>
+
+      {/* Add Task Section */}
+      {isAdding ? (
+        <div className="space-y-3">
+          <Input
+            value={newTask}
+            onChange={(e) => setNewTask(e.target.value)}
+            placeholder="What are you working on?"
+            className="bg-white/20 border-white/30 text-white placeholder:text-white/60 w-full focus:ring-1 focus:ring-white/10"
+            onKeyDown={(e) => e.key === 'Enter' && addTask()}
+            autoFocus
+          />
+          <div className="flex flex-col sm:flex-row gap-2">
+            <Button
+              onClick={addTask}
+              className="bg-white text-black hover:bg-white/95 flex-1 cursor-pointer"
+            >
+              <Plus className="w-4 h-4 mr-2" />
+              Add Task
+            </Button>
+
+            <Button
+              onClick={() => {
+                setIsAdding(false);
+                setNewTask('');
+              }}
+              variant="outline"
+              className="border-white/30 text-white hover:bg-white/90 hover:text-black cursor-pointer"
+            >
+              Cancel
+            </Button>
+          </div>
+        </div>
+      ) : (
+        <Button
+          onClick={() => setIsAdding(true)}
+          className="w-full bg-white/20 hover:bg-white/30 text-white border-2 border-dashed border-white/40 cursor-pointer"
+        >
+          <Plus className="w-5 h-5 mr-2" />
+          Add Task
+        </Button>
+      )}
+    </div>
+
+
 </div>
 
   );
