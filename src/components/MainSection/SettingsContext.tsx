@@ -34,7 +34,7 @@ const defaultDurations = {
 const defaultSettings: SettingsType = {
   durations: defaultDurations,
   sound: true,
-  soundVolume: 1.0, // 👈 New default volume
+  soundVolume: 0.3, // 👈 New default volume
   notification: true,
   alarm: 'bell',
   theme: 'cupcake', // 👈 Default theme

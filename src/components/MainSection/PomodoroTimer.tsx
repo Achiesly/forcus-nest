@@ -131,7 +131,7 @@ const modes = useMemo(() => ({
 
 const playNotificationSound = useCallback(() => {
   const soundEnabled = settings?.sound ?? true;
-  const soundVolume = settings?.soundVolume ?? 1.0;
+  const soundVolume = settings?.soundVolume ?? 0.3;
   const alarm = settings?.alarm ?? 'bell';
 
   if (!soundEnabled) return;
@@ -248,7 +248,7 @@ useEffect(() => {
   const progress = ((modes[mode].duration - timeLeft) / modes[mode].duration) * 100;
 
   return (
-<div className="flex flex-col items-center space-y-8 mb-8 px-4 sm:px-6 mt-4">
+<div className="flex flex-col items-center space-y-8 mb-10 px-4 sm:px-6 mt-4">
   <div className="bg-transparent backdrop-blur-sm rounded-full p-0 flex flex-wrap justify-center gap-2 sm:space-x-2">  {Object.entries(modes).map(([key, config]) => (
       <button
         key={key}
@@ -325,7 +325,6 @@ useEffect(() => {
 
   {/* AdBanner */}
   <div className="w-full flex justify-center my-4">
-    {/* Replace this with your actual AdBanner component */}
     <AdBanner />
   </div>
 

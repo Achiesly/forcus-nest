@@ -92,7 +92,7 @@ export default function Header() {
               min={0}
               max={1}
               step={0.01}
-              value={settings.soundVolume ?? 1.0}
+              value={settings.soundVolume ?? 0.3}
               onChange={(e) => {
                 const newVolume = parseFloat(e.target.value);
                 updateSettings({ soundVolume: newVolume });
