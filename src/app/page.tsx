@@ -17,11 +17,11 @@ export const metadata = {
     title: 'FocusNest',
     description:
       'FocusNest helps you stay productive using the science-backed Pomodoro technique. Boost your focus, avoid burnout, and get more done, one session at a time.',
-    url: 'https://www.focusnest.online',
+    url: 'https://focusnest.online',
     type: 'website',
     images: [
       {
-        url: 'https://www.focusnest.online/og-image.png', // optional, replace with your OG image
+        url: 'https://focusnest.online/og-image.png', // optional, replace with your OG image
         width: 1200,
         height: 630,
         alt: 'FocusNest-Pomodoro Timer',
@@ -33,14 +33,14 @@ export const metadata = {
     title: 'FocusNest-Free Pomodoro Timer',
     description: 'Boost your focus and productivity using the Pomodoro technique. No login required!',
     creator: '@yourhandle', // Optional: Add your Twitter handle
-    images: ['https://www.focusnest.online/og-image.png'],
+    images: ['https://focusnest.online/og-image.png'],
   },
 
   icons: {
     icon: '/favicon.ico',
   },
   alternates: {
-    canonical: 'https://www.focusnest.online',
+    canonical: 'https://focusnest.online',
   },
 };
 
@@ -56,7 +56,7 @@ export default function Home() {
             "@context": "https://schema.org",
             "@type": "WebApplication",
             name: "FocusNest",
-            url: "https://www.focusnest.online",
+            url: "https://focusnest.online",
             description:
               "A modern Pomodoro and productivity timer web app",
             applicationCategory: "ProductivityApplication",
